@@ -1,4 +1,4 @@
-"""Streamlit dashboard for custody document tracking."""
+"""Mamadoc — Streamlit dashboard for document tracking."""
 
 import json
 from datetime import datetime, date
@@ -9,18 +9,18 @@ import pandas as pd
 import streamlit as st
 
 # Must be first Streamlit call
-st.set_page_config(page_title="Custody Tracker", page_icon="📋", layout="wide")
+st.set_page_config(page_title="Mamadoc", page_icon="📋", layout="wide")
 
-from src import db
-from src.config import (
+from mamadoc import db
+from mamadoc.config import (
     ANTHROPIC_API_KEY,
     API_TIMEOUT,
-    CUSTODY_DIR,
+    MAMADOC_DIR,
     MODEL,
     PROCESSED_DIR,
     setup_logging,
 )
-from src.process_pdf import process_pdf
+from mamadoc.process_pdf import process_pdf
 
 log = setup_logging()
 db.init_db()
@@ -29,10 +29,10 @@ db.init_db()
 # Sidebar
 # ---------------------------------------------------------------------------
 with st.sidebar:
-    st.title("Custody Tracker")
+    st.title("Mamadoc")
 
     if st.button("Process New PDFs", use_container_width=True, type="primary"):
-        pdf_files = sorted(CUSTODY_DIR.glob("*.pdf"))
+        pdf_files = sorted(MAMADOC_DIR.glob("*.pdf"))
         unprocessed = [f for f in pdf_files if not db.is_processed(f.name)]
         if not unprocessed:
             st.info("No new PDFs found")
@@ -71,7 +71,7 @@ with st.sidebar:
 
     st.divider()
     if st.button("Export to Excel", use_container_width=True):
-        export_path = CUSTODY_DIR / "custody_export.xlsx"
+        export_path = MAMADOC_DIR / "mamadoc_export.xlsx"
         db.export_to_excel(export_path)
         st.success(f"Exported to {export_path.name}")
 
@@ -153,7 +153,7 @@ with tab_dash:
     st.divider()
 
     if len(filtered) == 0:
-        st.info("No documents yet. Scan some PDFs into the custody folder and click 'Process New PDFs'.")
+        st.info("No documents yet. Scan some PDFs into the mamadoc folder and click 'Process New PDFs'.")
     else:
         # Display table
         display_cols = [
@@ -322,7 +322,7 @@ with tab_detail:
                 col_re, col_del = st.columns(2)
                 with col_re:
                     if st.button("🔄 Re-extract", key=f"reprocess_{selected_id}"):
-                        pdf_path = CUSTODY_DIR / doc["filename"]
+                        pdf_path = MAMADOC_DIR / doc["filename"]
                         if pdf_path.exists():
                             with st.spinner("Re-extracting..."):
                                 process_pdf(pdf_path, force=True)

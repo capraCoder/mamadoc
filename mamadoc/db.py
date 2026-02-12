@@ -1,4 +1,4 @@
-"""SQLite database schema and CRUD operations for custody document tracking."""
+"""SQLite database schema and CRUD operations for Mamadoc document tracking."""
 
 import sqlite3
 from datetime import datetime, timezone

@@ -1,4 +1,4 @@
-"""Configuration and environment setup for custody document processing."""
+"""Mamadoc — configuration and environment setup."""
 
 import logging
 import os
@@ -9,12 +9,12 @@ from pathlib import Path
 from dotenv import load_dotenv
 
 # Paths — auto-detect project root (directory containing src/)
-CUSTODY_DIR = Path(os.getenv("CUSTODY_DIR", Path(__file__).resolve().parent.parent))
-PROCESSED_DIR = CUSTODY_DIR / "processed"
-DB_PATH = CUSTODY_DIR / "custody.db"
+MAMADOC_DIR = Path(os.getenv("MAMADOC_DIR", Path(__file__).resolve().parent.parent))
+PROCESSED_DIR = MAMADOC_DIR / "processed"
+DB_PATH = MAMADOC_DIR / "mamadoc.db"
 
 # Load API key from .env in project root
-_env_path = CUSTODY_DIR / ".env"
+_env_path = MAMADOC_DIR / ".env"
 if _env_path.exists():
     load_dotenv(_env_path, override=True)
 
@@ -32,12 +32,12 @@ API_MAX_RETRIES = 2     # SDK built-in exponential backoff for 429/500
 MAX_PAGES = 20          # refuse PDFs above this page count
 
 # Logging
-LOG_PATH = CUSTODY_DIR / "custody.log"
+LOG_PATH = MAMADOC_DIR / "mamadoc.log"
 
 
 def setup_logging() -> logging.Logger:
     """Configure rotating file + console logger. Safe to call multiple times."""
-    logger = logging.getLogger("custody")
+    logger = logging.getLogger("mamadoc")
     if logger.handlers:
         return logger
     logger.setLevel(logging.INFO)
@@ -62,7 +62,7 @@ def check_setup() -> bool:
 
     if not ANTHROPIC_API_KEY:
         log.error("ANTHROPIC_API_KEY not found.")
-        log.error(f"  Add it to {CUSTODY_DIR / '.env'} or set ANTHROPIC_API_KEY env var")
+        log.error(f"  Add it to {MAMADOC_DIR / '.env'} or set ANTHROPIC_API_KEY env var")
         ok = False
 
     # Check pdf2image / poppler
@@ -83,7 +83,7 @@ def check_setup() -> bool:
 if __name__ == "__main__":
     if check_setup():
         log = setup_logging()
-        log.info(f"  CUSTODY_DIR: {CUSTODY_DIR}")
+        log.info(f"  MAMADOC_DIR: {MAMADOC_DIR}")
         log.info(f"  DB_PATH:     {DB_PATH}")
         log.info(f"  API key:     {ANTHROPIC_API_KEY[:12]}...")
         log.info(f"  Model:       {MODEL}")

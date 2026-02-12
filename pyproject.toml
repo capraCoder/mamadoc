@@ -1,0 +1,48 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "mamadoc"
+version = "0.2.0"
+description = "AI-powered document tracker: scan letters, get structured extraction and actionable recommendations"
+readme = "README.md"
+license = {text = "MIT"}
+requires-python = ">=3.10"
+authors = [
+    {name = "Kafkas M. Caprazli", email = "caprazli@cosmologic.pro"},
+]
+keywords = ["document-management", "ocr", "claude", "ai", "pdf", "streamlit", "elder-care"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: End Users/Desktop",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Office/Business",
+    "Topic :: Text Processing :: General",
+]
+dependencies = [
+    "anthropic>=0.45.0",
+    "streamlit>=1.40.0",
+    "pandas>=2.0.0",
+    "openpyxl>=3.1.0",
+    "pdf2image>=1.16.0",
+    "python-dotenv>=1.0.0",
+    "watchdog>=4.0.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/capraCoder/mamadoc"
+Repository = "https://github.com/capraCoder/mamadoc"
+Issues = "https://github.com/capraCoder/mamadoc/issues"
+
+[project.scripts]
+mamadoc = "mamadoc.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["mamadoc*"]

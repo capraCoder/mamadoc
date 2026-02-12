@@ -1,6 +1,6 @@
-# Custody Tracker
+# Mamadoc
 
-AI-powered document processing system for managing household paperwork. Scan letters as PDFs, get structured extraction with actionable recommendations, and track everything in a Streamlit dashboard.
+AI-powered document processing for managing household paperwork. Scan letters as PDFs, get structured extraction with actionable recommendations, and track everything in a Streamlit dashboard.
 
 Built for the real-world problem of managing a pile of unsorted letters — insurance notices, invoices, government correspondence, care facility paperwork — where you need to know what each letter says, what you need to do, and which letters belong to the same matter.
 
@@ -40,40 +40,57 @@ Scanned PDF → Claude Vision API → Structured JSON → SQLite → Streamlit D
 
 **Linux:** `sudo apt install poppler-utils`
 
-## Setup
+## Install
 
+### From PyPI
 ```bash
-git clone https://github.com/capraCoder/custody-tracker.git
-cd custody-tracker
-pip install -r requirements.txt
+pip install mamadoc
+```
+
+### From source
+```bash
+git clone https://github.com/capraCoder/mamadoc.git
+cd mamadoc
+pip install -e .
+```
+
+### Configure
+```bash
 cp .env.example .env
 # Edit .env and add your Anthropic API key
 ```
 
 Verify setup:
 ```bash
-python -m src.config
+mamadoc check
 ```
 
 ## Usage
 
-### Process PDFs manually
+### CLI commands
 ```bash
+# Check environment setup
+mamadoc check
+
 # Process all unprocessed PDFs in the project folder
-python -m src.process_pdf
+mamadoc process
 
 # Reprocess a specific document
-python -m src.process_pdf Document_2026-01-15.pdf --force
+mamadoc process Document_2026-01-15.pdf --force
+
+# Launch the Streamlit dashboard
+mamadoc dashboard
+
+# Watch folder for new PDFs and auto-process
+mamadoc watch
 ```
 
-### Launch the dashboard
+### Direct module execution
 ```bash
-python -m streamlit run src/app.py
-```
-
-### Auto-process new PDFs (file watcher)
-```bash
-python -m src.watcher
+python -m mamadoc.process_pdf
+python -m mamadoc.process_pdf Document_2026-01-15.pdf --force
+python -m streamlit run mamadoc/app.py
+python -m mamadoc.watcher
 ```
 
 ## Dashboard Tabs
@@ -89,8 +106,10 @@ python -m src.watcher
 ## Architecture
 
 ```
-custody-tracker/
-  src/
+mamadoc/
+  mamadoc/
+    __init__.py     — version
+    cli.py          — CLI entry point (mamadoc command)
     config.py       — paths, API keys, logging, constants
     prompt.py       — Claude Vision prompts, JSON parsing, validation
     db.py           — SQLite schema + CRUD (documents, actions, issues, tasks)
@@ -98,8 +117,9 @@ custody-tracker/
     app.py          — Streamlit dashboard (5 tabs)
     watcher.py      — watchdog auto-processor for new PDFs
   .env              — your API key (not committed)
-  custody.db        — SQLite database (auto-created)
+  mamadoc.db        — SQLite database (auto-created)
   processed/        — extracted JSON + page images
+  pyproject.toml    — PyPI package config
 ```
 
 ## Cost

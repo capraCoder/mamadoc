@@ -14,7 +14,7 @@ from .config import (
     ANTHROPIC_API_KEY,
     API_MAX_RETRIES,
     API_TIMEOUT,
-    CUSTODY_DIR,
+    MAMADOC_DIR,
     DPI,
     JPEG_QUALITY,
     MAX_PAGES,
@@ -299,12 +299,12 @@ def process_pdf(pdf_path: Path, force: bool = False) -> dict | None:
 
 
 def process_all(force: bool = False) -> tuple[list[dict], list[str]]:
-    """Process all unprocessed PDFs in the custody directory.
+    """Process all unprocessed PDFs in the mamadoc directory.
 
     Returns:
         (results, failed_filenames)
     """
-    pdf_files = sorted(CUSTODY_DIR.glob("*.pdf"))
+    pdf_files = sorted(MAMADOC_DIR.glob("*.pdf"))
     if force:
         unprocessed = pdf_files
     else:
@@ -337,7 +337,7 @@ def process_all(force: bool = False) -> tuple[list[dict], list[str]]:
 if __name__ == "__main__":
     import argparse
 
-    parser = argparse.ArgumentParser(description="Process custody PDFs")
+    parser = argparse.ArgumentParser(description="Process PDFs")
     parser.add_argument("pdf", nargs="?", help="Single PDF to process")
     parser.add_argument("--force", action="store_true", help="Reprocess even if already done")
     args = parser.parse_args()

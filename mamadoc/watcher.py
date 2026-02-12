@@ -1,4 +1,4 @@
-"""Watch custody folder for new PDFs and auto-process them."""
+"""Watch mamadoc folder for new PDFs and auto-process them."""
 
 import sys
 import time
@@ -8,7 +8,7 @@ from watchdog.events import FileSystemEventHandler
 from watchdog.observers import Observer
 
 from . import db
-from .config import CUSTODY_DIR, check_setup, setup_logging
+from .config import MAMADOC_DIR, check_setup, setup_logging
 from .process_pdf import process_pdf
 
 log = setup_logging()
@@ -69,10 +69,10 @@ def main():
     db.init_db()
 
     observer = Observer()
-    observer.schedule(PDFHandler(), str(CUSTODY_DIR), recursive=False)
+    observer.schedule(PDFHandler(), str(MAMADOC_DIR), recursive=False)
     observer.start()
 
-    log.info(f"Watching {CUSTODY_DIR} for new PDFs...")
+    log.info(f"Watching {MAMADOC_DIR} for new PDFs...")
     log.info("Press Ctrl+C to stop.")
 
     try:
