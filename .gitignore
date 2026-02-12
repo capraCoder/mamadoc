@@ -1,0 +1,42 @@
+# Environment
+.env
+
+# Database
+*.db
+*.db-shm
+*.db-wal
+
+# Logs
+*.log
+
+# Processed outputs (generated, user-specific)
+processed/
+
+# PDFs (user documents — never commit)
+*.pdf
+
+# Exports
+*.xlsx
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+nul
+
+# Claude Code session data
+.claude/
