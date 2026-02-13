@@ -8,7 +8,15 @@ AI-powered document processing for managing household paperwork. Scan letters as
 
 Started because my mother's paperwork kept piling up — German letters about insurance, care facilities, invoices — and I needed something that could read them, tell me what to do, and track what was still open. The name stuck.
 
-Built for the real-world problem of managing a pile of unsorted letters — insurance notices, invoices, government correspondence, care facility paperwork — where you need to know what each letter says, what you need to do, and which letters belong to the same matter.
+Built for anyone who manages paperwork on behalf of someone else — an aging parent, a relative in care, a family member abroad. If you're the one who opens the mail, figures out what it says, and makes sure nothing falls through the cracks, this is for you.
+
+### How it works in practice
+
+**A letter arrives from the health insurance.** You scan it with your phone, drop the PDF into the mamadoc folder. Mamadoc reads the German text, tells you in English: "This is a reimbursement rejection for physiotherapy, amount: EUR 84.50, deadline to appeal: March 15. Urgency: high." It creates an action item — "File objection before March 15" — and links it to the same insurance issue from two months ago, so you can see the full timeline: original claim, then approval, now rejection.
+
+**You also need to call the care facility about a room change.** That's not a letter — it's just something you need to do. You add it as a personal task in the Pending Actions tab with a deadline. Now both your document-extracted actions and your own to-dos are in one place.
+
+**A week later you're not sure what's still open.** You go to the Ask tab and type: "What deadlines am I about to miss?" Mamadoc checks your documents and tasks and tells you.
 
 ## What It Does
 
