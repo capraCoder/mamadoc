@@ -6,6 +6,8 @@
 
 AI-powered document processing for managing household paperwork. Scan letters as PDFs, get structured extraction with actionable recommendations, and track everything in a Streamlit dashboard.
 
+Started because my mother's paperwork kept piling up — German letters about insurance, care facilities, invoices — and I needed something that could read them, tell me what to do, and track what was still open. The name stuck.
+
 Built for the real-world problem of managing a pile of unsorted letters — insurance notices, invoices, government correspondence, care facility paperwork — where you need to know what each letter says, what you need to do, and which letters belong to the same matter.
 
 ## What It Does
