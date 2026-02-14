@@ -24,6 +24,11 @@ def main():
     # mamadoc watch
     sub.add_parser("watch", help="Watch folder for new PDFs and auto-process")
 
+    # mamadoc start
+    sub.add_parser(
+        "start", help="Start watcher + dashboard together (drop PDFs → auto-process)"
+    )
+
     # mamadoc check
     sub.add_parser("check", help="Verify environment setup")
 
@@ -62,6 +67,37 @@ def main():
         from .watcher import main as watch_main
 
         watch_main()
+
+    elif args.command == "start":
+        import subprocess
+
+        from . import db
+        from .config import MAMADOC_DIR, check_setup
+
+        if not check_setup():
+            sys.exit(1)
+        db.init_db()
+
+        # Watcher in background thread
+        from .watcher import PDFHandler
+
+        from watchdog.observers import Observer
+
+        observer = Observer()
+        observer.schedule(PDFHandler(), str(MAMADOC_DIR), recursive=False)
+        observer.daemon = True
+        observer.start()
+        print(f"Watcher started on {MAMADOC_DIR}")
+
+        # Dashboard in foreground
+        try:
+            subprocess.run(
+                [sys.executable, "-m", "streamlit", "run", "mamadoc/app.py"],
+                cwd=str(MAMADOC_DIR),
+            )
+        finally:
+            observer.stop()
+            observer.join()
 
     elif args.command == "check":
         from .config import check_setup
